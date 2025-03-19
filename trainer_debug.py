@@ -62,7 +62,12 @@ class Trainer(object):
 
         # Miscellaneous.
         self.use_tensorboard = args.use_tensorboard
-        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        if torch.backends.mps.is_available():
+            self.device = torch.device('mps')
+        elif torch.cuda.is_available():
+            self.device = torch.device('cuda')
+        else:
+            self.device = torch.device('cpu')
 
         # Directories.
         self.log_dir = args.log_dir
@@ -564,7 +569,7 @@ class Trainer(object):
 
       g_epoch_loss = []
       d_epoch_loss = []
-      print('Start training...')
+      print('Start training...', "self.device", self.device)
       # start_time = time.time()
       g_batch_loss = []
       d_batch_loss = []
