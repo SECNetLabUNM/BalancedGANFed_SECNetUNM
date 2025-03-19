@@ -97,10 +97,10 @@ def getDicts():
     return fieldsList, fieldsDict, fieldsNameDict, filenameMDsDict, filenameMDsObjDict
 
 filenames = [
-  'data-smiles/qm8_smiles.pkl',
-  'data-smiles/qm9_smiles.pkl',
-  'data-smiles/esol_smiles.pkl',
-  'data_smiles/drugbank/diabetes-drugbank.pkl',
+  # 'data-smiles/qm8_smiles.pkl',
+  # 'data-smiles/qm9_smiles.pkl',
+  # 'data-smiles/esol_smiles.pkl',
+  # 'data_smiles/drugbank/diabetes-drugbank.pkl',
   'data_smiles/qm8-diabetes-drugbank.pkl',
 ]
 
