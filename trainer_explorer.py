@@ -213,7 +213,7 @@ def genDatasetSplits(num_users, dataRoorFolder = 'data_smiles/'):
   fieldsList, fieldsDict, fieldsNameDict, filenameMDsDict, filenameMDsObjDict = molecular_dataset_test.getDicts()
   smilesList = []
   mol32 = None
-  filenames = ['data-smiles/qm8_smiles.pkl','data_smiles/drugbank/diabetes-drugbank.pkl']
+  filenames = ['data_smiles/drugbank/qm8-diabetes-drugbank.pkl']
   atomicNumRepresentative = getAtomicNumRepresentative(filenames)
   for filename in filenames:
     mdata = filenameMDsObjDict[filename]
