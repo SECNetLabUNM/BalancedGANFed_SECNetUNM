@@ -18,7 +18,7 @@ from itertools import chain, zip_longest
 from sklearn.metrics import classification_report as classification_report
 from sklearn.metrics import confusion_matrix
 # import trainer
-from trainer_debug import Trainer
+# from trainer_debug import Trainer
 
 
 class MolecularMetrics(object):
@@ -120,67 +120,67 @@ class MolecularMetrics(object):
         score = np.mean(dist)
         return score
 
-    @staticmethod
-    def reconstruction_scores(data, batch_size=10, sample=False):  
-            m0, _, _, a, x, _, f, _, _ = data.next_validation_batch()
-
-            n, e = trainer.nodes_hard, trainer.edges_hard
-
-            m1 = [data.matrices2mol(n_.data.cpu().numpy(), e_.data.cpu().numpy(), strict=True) for n_, e_ in zip(n, e)]
-
-            return np.mean([float(Chem.MolToSmiles(m0_) == Chem.MolToSmiles(m1_)) if m1_ is not None else 0
-                    for m0_, m1_ in zip(m0, m1)])
-
-    @staticmethod
-    def classification_report(data):
-        _, _, _, a, x, _, f, _, _ = data.next_validation_batch()
-        
-        n, e = trainer.nodes_hat, trainer.edges_hat
-
-        e, n = torch.max(e, -1)[1], torch.max(n, -1)[1]
-
-        y_true = e.flatten()
-        # print(y_true)
-        # print(y_true.shape)
-        y_pred = a.flatten()
-        # print(y_pred)
-        # print(y_pred.shape)
-        target_names = [str(Chem.rdchem.BondType.values[int(e)]) for e in data.bond_decoder_m.values()]
-        # print(target_names)
-
-        print('######## Classification Report ########\n')
-        print(classification_report(y_true, y_pred, labels=list(range(len(target_names))),
-                                    target_names=target_names))
-
-        print('######## Confusion Matrix ########\n')
-        print(confusion_matrix(y_true, y_pred, labels=list(range(len(target_names)))))
-
-        y_true = n.flatten()
-        y_pred = x.flatten()
-        target_names = [Chem.Atom(e).GetSymbol() for e in data.atom_decoder_m.values()]
-
-        print('######## Classification Report ########\n')
-        print(classification_report(y_true, y_pred, labels=list(range(len(target_names))),
-                                    target_names=target_names))
-
-        print('\n######## Confusion Matrix ########\n')
-        print(confusion_matrix(y_true, y_pred, labels=list(range(len(target_names)))))
-
-    @staticmethod
-    def reconstructions(data, batch_dim=100, sample=False):
-            m0, _, _, a, x, _, f, _, _ = data.next_train_batch(batch_dim)
-                                    
-            n, e = trainer.nodes_hard, trainer.edges_hard
-
-            m1 = np.array([e if e is not None else Chem.RWMol() for e in [data.matrices2mol(n_.data.cpu().numpy(), e_.data.cpu().numpy(), strict=True) 
-                                                                        for n_, e_ in zip(n, e)]])
-            m1 = m1[:100]
-            
-            # mols = np.vstack((m0, m1)).T.flatten()
-            mols = m1
-            # mols = [mol for mol in chain(*zip_longest(m0, m1)) if mol is not None]
-            return mols
-
+#    @staticmethod
+#    def reconstruction_scores(data, batch_size=10, sample=False):  
+#            m0, _, _, a, x, _, f, _, _ = data.next_validation_batch()
+#
+#            n, e = trainer.nodes_hard, trainer.edges_hard
+#
+#            m1 = [data.matrices2mol(n_.data.cpu().numpy(), e_.data.cpu().numpy(), strict=True) for n_, e_ in zip(n, e)]
+#
+#            return np.mean([float(Chem.MolToSmiles(m0_) == Chem.MolToSmiles(m1_)) if m1_ is not None else 0
+#                    for m0_, m1_ in zip(m0, m1)])
+#
+#    @staticmethod
+#    def classification_report(data):
+#        _, _, _, a, x, _, f, _, _ = data.next_validation_batch()
+#        
+#        n, e = trainer.nodes_hat, trainer.edges_hat
+#
+#        e, n = torch.max(e, -1)[1], torch.max(n, -1)[1]
+#
+#        y_true = e.flatten()
+#        # print(y_true)
+#        # print(y_true.shape)
+#        y_pred = a.flatten()
+#        # print(y_pred)
+#        # print(y_pred.shape)
+#        target_names = [str(Chem.rdchem.BondType.values[int(e)]) for e in data.bond_decoder_m.values()]
+#        # print(target_names)
+#
+#        print('######## Classification Report ########\n')
+#        print(classification_report(y_true, y_pred, labels=list(range(len(target_names))),
+#                                    target_names=target_names))
+#
+#        print('######## Confusion Matrix ########\n')
+#        print(confusion_matrix(y_true, y_pred, labels=list(range(len(target_names)))))
+#
+#        y_true = n.flatten()
+#        y_pred = x.flatten()
+#        target_names = [Chem.Atom(e).GetSymbol() for e in data.atom_decoder_m.values()]
+#
+#        print('######## Classification Report ########\n')
+#        print(classification_report(y_true, y_pred, labels=list(range(len(target_names))),
+#                                    target_names=target_names))
+#
+#        print('\n######## Confusion Matrix ########\n')
+#        print(confusion_matrix(y_true, y_pred, labels=list(range(len(target_names)))))
+#
+#    @staticmethod
+#    def reconstructions(data, batch_dim=100, sample=False):
+#            m0, _, _, a, x, _, f, _, _ = data.next_train_batch(batch_dim)
+#                                    
+#            n, e = trainer.nodes_hard, trainer.edges_hard
+#
+#            m1 = np.array([e if e is not None else Chem.RWMol() for e in [data.matrices2mol(n_.data.cpu().numpy(), e_.data.cpu().numpy(), strict=True) 
+#                                                                        for n_, e_ in zip(n, e)]])
+#            m1 = m1[:100]
+#            
+#            # mols = np.vstack((m0, m1)).T.flatten()
+#            mols = m1
+#            # mols = [mol for mol in chain(*zip_longest(m0, m1)) if mol is not None]
+#            return mols
+#
     @staticmethod
     def similarity_scores(mols, data):
         rand_mols = np.random.choice(data.data, 100)
