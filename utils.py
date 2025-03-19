@@ -17,8 +17,8 @@ from itertools import chain, zip_longest
 
 from sklearn.metrics import classification_report as classification_report
 from sklearn.metrics import confusion_matrix
-import trainer 
-
+# import trainer
+from trainer_debug import Trainer
 
 
 class MolecularMetrics(object):
