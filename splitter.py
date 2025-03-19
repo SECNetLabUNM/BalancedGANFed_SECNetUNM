@@ -7,7 +7,7 @@ def getAtomicNumRepresentative(filenames = ['data-smiles/qm8_smiles.pkl','data_s
   smilesList = []
   mols = []
   atomicNumRepresentative = {} # atom.GetAtomicNum()
-  filenames = ['data-smiles/qm8_smiles.pkl','data_smiles/drugbank/diabetes-drugbank.pkl']
+  filenames = ['data_smiles/qm8-diabetes-drugbank.pkl']
   for filename in filenames:
     mdata = filenameMDsObjDict[filename]
     for mol in mdata.data:
