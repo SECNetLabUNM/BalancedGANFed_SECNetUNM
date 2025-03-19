@@ -63,7 +63,7 @@ MolecularDatasetkeys = list()
 def getDicts():
     global MolecularDatasetkeys
     data = MolecularDataset()
-    filename = 'data-smiles/esol_smiles.pkl.dataset'
+    filename = 'data_smiles/qm8-diabetes-drugbank.pkl.dataset'
     data.load(filename) # args.mol_data_dir
     printObjectAttrs(data)
     MolecularDatasetkeys = data.__dict__.keys()
