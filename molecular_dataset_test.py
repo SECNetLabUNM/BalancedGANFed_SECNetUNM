@@ -185,7 +185,7 @@ def testDrugbankMD(filenameMDsObjDict): # MD: MolecularDataset
         , "\n\tname", genPkl.fnDict["serialNameDict.txt.py"][ serial_max_length_s ] )
 
 if __name__ == '__main__':
-    testMolecularDatasets()
+    # testMolecularDatasets()
     fieldsList, fieldsDict, fieldsNameDict, filenameMDsDict, filenameMDsObjDict = getDicts()
     dsCompareToHtml(fieldsList, fieldsDict, fieldsNameDict, filenameMDsDict, filenameMDsObjDict)
     testDrugbankMD(filenameMDsObjDict)
