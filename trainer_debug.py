@@ -463,7 +463,11 @@ class Trainer(object):
       x = torch.from_numpy(x).to(self.device).long()            # Nodes.
       a_tensor = self.label2onehot(a, self.b_dim)
       x_tensor = self.label2onehot(x, self.m_dim)
-      z = torch.from_numpy(z).to(self.device).float()
+      # Convert tensors based on the device type
+      if self.device.type == 'cuda':
+        z = torch.from_numpy(z).to(self.device).float()
+      else:
+        z = torch.from_numpy(z).to(torch.float32).to(self.device)  # Use float32 for MPS and CPU
       return a, x, a_tensor, x_tensor, z
 
     def d_step(self, d_batch_loss, d_valid_loss, a_tensor, x_tensor, z, loss, islog_step=False):
