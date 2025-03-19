@@ -249,10 +249,10 @@ def getGlobalValidLoss(G, D, V, local_models, args, global_model):
     a_tensor = global_model.label2onehot(a, lM.b_dim)
     x_tensor = global_model.label2onehot(x, lM.m_dim)
     # z = torch.from_numpy(z).to(lM.device).float()
-    if self.device.type == 'cuda':
-      z = torch.from_numpy(z).to(self.device).float()
+    if lM.device.type == 'cuda':
+      z = torch.from_numpy(z).to(lM.device).float()
     else:
-      z = torch.from_numpy(z).to(torch.float32).to(self.device)  # Use float32 for MPS and CPU
+      z = torch.from_numpy(z).to(torch.float32).to(lM.device)  # Use float32 for MPS and CPU
 
 
     logits_real, features_real = D(a_tensor, None, x_tensor)
