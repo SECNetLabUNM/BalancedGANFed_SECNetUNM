@@ -375,12 +375,35 @@ def getProbDistrNaCategories(naMolsDict, num_users=3):
     plt.savefig("fedgan5/img/" + k+".png")
   pass
 
+def getEntry_uMol_data_dirs_list(splitText="9355-8744-3874", n_users=3):
+  v = [
+    'data_smiles/noniid/split-9355-8744-3874/3/0.pkl.dataset', 
+    'data_smiles/noniid/split-9355-8744-3874/3/1.pkl.dataset', 
+    'data_smiles/noniid/split-9355-8744-3874/3/2.pkl.dataset']
+  v = []
+  noniidFolderName = 'data_smiles/noniid/'
+  dir_list = os.listdir( noniidFolderName )
+  for fn in dir_list:
+    if splitText in fn:
+      print( "if splitText in fn:", fn )
+      splitFolderName = os.path.join( noniidFolderName, fn )
+      print( "splitFolderName:", splitFolderName )
+      for i in range(n_users):
+        udatasetfnPrefix = os.path.join( splitFolderName, str(n_users) )
+        udatasetfn = os.path.join( udatasetfnPrefix, str(i) + '.pkl.dataset' )
+        print( udatasetfn, udatasetfnPrefix )
+        v.append( udatasetfn )
+  # v = []
+  return v
+
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
   parser.add_argument('--alphaKey', type=str, default='5')
+  parser.add_argument('--splitText', type=str, default='9355-8744-3874')
   argsAlpha = parser.parse_args()
   print( "argsAlpha.alphaKey", argsAlpha.alphaKey )
   alphaKey = argsAlpha.alphaKey
+  splitText = argsAlpha.splitText
   alpha = float( alphaKey )
   print( "sys.argv (before reset)", sys.argv )
   # sys.argv = []
@@ -389,10 +412,12 @@ if __name__ == '__main__':
   args = getArgs()
   uMol_data_dirs_list = {}
   uMol_data_dirs_list["iid"] = genDatasetSplits(args.num_users)
-  uMol_data_dirs_list["nonIid-0.5"] = [
-    'data_smiles/noniid/split-9355-8744-3874/3/0.pkl.dataset', 
-    'data_smiles/noniid/split-9355-8744-3874/3/1.pkl.dataset', 
-    'data_smiles/noniid/split-9355-8744-3874/3/2.pkl.dataset']
+  v = getEntry_uMol_data_dirs_list(splitText=splitText)
+  if len(v) >0:
+    uMol_data_dirs_list["nonIid-0.5"] = v
+  else:
+    print( "len(v)<=0", "getEntry_uMol_data_dirs_list", splitText )
+    sys.exit()
   labelsEtcDict = {}
   naMolsDict = {}
   for datakey,uMol_data_dirs in uMol_data_dirs_list.items():
