@@ -43,6 +43,7 @@ import dirichlet
 import check_iid
 from trainer_explorer import genDatasetSplits
 from contextlib import redirect_stdout
+import pprint
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
@@ -79,3 +80,8 @@ if __name__ == '__main__':
           dirichlet.getStackedSubplotsExcl78(naMolsDict, k)
         # dirichlet.getStackedSubplots(naMolsDict, formatted_date)
         # dirichlet.getStackedSubplotsExcl78(naMolsDict, formatted_date)
+      # else:
+      #   print( pprint.pformat( SqliteDict , indent=2, sort_dicts=False) )
+      #   print( pprint.pformat( non_iid_clients_dict_alpha , indent=2, sort_dicts=False) )
+  else:
+    print( pprint.pformat( list( non_iid_clients_dict.keys() ) , indent=2, sort_dicts=False) )
