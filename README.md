@@ -26,6 +26,8 @@ python3 trainer_test.py --cmd train   --epochs_global  5  --isFL True  --isWAvg 
 # monitor training status
 pip install outset
 ls -laht | head
+# create the folder for zoomed in figures to be saved
+mkdir fedgan5/img/
 python3 progress_zoom_sqlitedict.py --logdatetime  25-03-19_05-21-05
 
 ```
