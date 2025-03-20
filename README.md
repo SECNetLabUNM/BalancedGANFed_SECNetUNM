@@ -1,8 +1,14 @@
 
+# environment setup
 ```
 # apple silicon macos
 eval "$(/Users/watney/miniconda3/bin/conda shell.zsh hook)"
+```
+## references:
+* https://developer.apple.com/metal/pytorch/
 
+
+```
 # conda
 conda create -n torch11 python=3.11
 conda activate torch11
@@ -16,7 +22,10 @@ conda install -c conda-forge tqdm
 conda install scikit-learn 
 conda install -c conda-forge gitpython
 pip install sqlitedict
+```
 
+# basic training commands
+```
 # generate dataset from pkl (list of smiles)
 python3 molecular_dataset_linux.py
 
