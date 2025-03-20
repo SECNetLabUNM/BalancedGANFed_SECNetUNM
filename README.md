@@ -37,3 +37,36 @@ scp watney@10.88.215.19:/Users/watney/git/BalancedGANFed_SECNetUNM/fedgan5/model
 python3 trainer_test.py --cmd train   --epochs_global  500  --isFL True  --man_resume_filepath fedgan5/models/init/2025-03-19_05-21-05/  --isWAvg True  --isFixedRatio  1 5 1 2>/dev/null
 
 ```
+
+# generate non-iid datasets
+```
+# the following will generate a non-iid dataset with the default alpha value:
+% python3 check_iid.py
+2025-03-20 16:34:56 Created 2456 features and adjacency matrices  out of 2456 molecules!
+3017196it [00:00, 5681309.45it/s]
+pathList ['data_smiles/noniid/split-15095-2444-4434/3/0.pkl.dataset', 'data_smiles/noniid/split-15095-2444-4434/3/1.pkl.dataset', 'data_smiles/noniid/split-15095-2444-4434/3/2.pkl.dataset']
+
+# use text for the pathList above to generate another non-iid dataset:
+% python3 dirichlet.py --splitText 15095-2444-4434
+alphaKey 5
+['2025-03-20_16-38-52']
+['iid', 'nonIid-0.5', 'nonIid-5']
+
+# previous command only generate a split with alpha = 5
+# without actually generate the data structure to be used in training
+# so use the following command to generate the data structure (file with .dataset extension)
+# by using the console out from previous command as formatted_date argument to this next command
+
+% python3 dirichlet_gen_dataset.py --formatted_date 2025-03-20_16-38-52  --existingdatasetid  15095-2444-4434
+2025-03-20 16:46:48 Creating features and adjacency matrices..
+38032281it [00:03, 21176038.64it/s]
+2025-03-20 16:46:52 Created 8762 features and adjacency matrices  out of 8762 molecules!
+38390703it [00:03, 12040437.05it/s]
+pathList ['data_smiles/noniid/split-7092-6131-8750/3/0.pkl.dataset', 'data_smiles/noniid/split-7092-6131-8750/3/1.pkl.dataset', 'data_smiles/noniid/split-7092-6131-8750/3/2.pkl.dataset']
+
+# finally, use this command to generate a pdf shown the corresponding iid and non iid datasets
+% python3 dirichlet_gen_pdf.py  --formatted_date 2025-03-20_14-58-15 --existingdatasetid 9905-2465-9603
+
+```
+* in the section above, commands begin with a % sign and those lines without % in front are console outputs
+
