@@ -184,13 +184,21 @@ params = {
    }
 rcParams.update(params)
 
-def getNaMolsDict(non_iid_clients, alphaKey, args, num_users=3):
+# caller: naMolsDict = dirichlet.getNaMolsDict( non_iid_clients, args.alphaKey, args_trainer_test, args.existingdatasetid )
+# args.existingdatasetid: existingdatasetid
+def getNaMolsDict(non_iid_clients, alphaKey, args, existingdatasetid, num_users=3):
   uMol_data_dirs_list = {}
   uMol_data_dirs_list["iid"] = genDatasetSplits(args.num_users)
-  uMol_data_dirs_list["nonIid-0.5"] = [
-    'data_smiles/noniid/split-9355-8744-3874/3/0.pkl.dataset', 
-    'data_smiles/noniid/split-9355-8744-3874/3/1.pkl.dataset', 
-    'data_smiles/noniid/split-9355-8744-3874/3/2.pkl.dataset']
+  # uMol_data_dirs_list["nonIid-0.5"] = [
+  #   'data_smiles/noniid/split-9355-8744-3874/3/0.pkl.dataset', 
+  #   'data_smiles/noniid/split-9355-8744-3874/3/1.pkl.dataset', 
+  #   'data_smiles/noniid/split-9355-8744-3874/3/2.pkl.dataset']
+  v = getEntry_uMol_data_dirs_list(splitText=existingdatasetid)
+  if len(v) >0:
+    uMol_data_dirs_list["nonIid-0.5"] = v
+  else:
+    print( "len(v)<=0", "getEntry_uMol_data_dirs_list", existingdatasetid )
+    sys.exit()
   labelsEtcDict = {}
   naMolsDict = {}
   for datakey,uMol_data_dirs in uMol_data_dirs_list.items():
@@ -376,10 +384,10 @@ def getProbDistrNaCategories(naMolsDict, num_users=3):
   pass
 
 def getEntry_uMol_data_dirs_list(splitText="9355-8744-3874", n_users=3):
-  v = [
-    'data_smiles/noniid/split-9355-8744-3874/3/0.pkl.dataset', 
-    'data_smiles/noniid/split-9355-8744-3874/3/1.pkl.dataset', 
-    'data_smiles/noniid/split-9355-8744-3874/3/2.pkl.dataset']
+  # v = [
+  #   'data_smiles/noniid/split-9355-8744-3874/3/0.pkl.dataset', 
+  #   'data_smiles/noniid/split-9355-8744-3874/3/1.pkl.dataset', 
+  #   'data_smiles/noniid/split-9355-8744-3874/3/2.pkl.dataset']
   v = []
   noniidFolderName = 'data_smiles/noniid/'
   dir_list = os.listdir( noniidFolderName )

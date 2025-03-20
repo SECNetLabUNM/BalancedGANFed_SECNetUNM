@@ -49,6 +49,7 @@ if __name__ == '__main__':
   parser = argparse.ArgumentParser()
   parser.add_argument('--formatted_date', type=str, default='25-02-25_01-39-30')
   parser.add_argument('--alphaKey', type=str, default='5')
+  parser.add_argument('--existingdatasetid', type=str, default='9905-2465-9603')
   args = parser.parse_args()
   print( "sys.argv (before reset)", sys.argv )
   # sys.argv = []
@@ -58,6 +59,7 @@ if __name__ == '__main__':
   # alphaKey = str(alpha)
   print( "alphaKey", args.alphaKey )
   print( "formatted_date", args.formatted_date )
+  print( "existingdatasetid", args.existingdatasetid )
   if args.alphaKey in non_iid_clients_dict:
     non_iid_clients_dict_alpha = non_iid_clients_dict[args.alphaKey]
     for k in non_iid_clients_dict_alpha.keys():
@@ -75,7 +77,7 @@ if __name__ == '__main__':
         with redirect_stdout(trap):
           labels, mols, smiles, atomicNumRepresentative, nMolsNaUsers, lModelsDataDataDict = \
             dirichlet.check_iid_uMol_data_dirs(args_trainer_test, uMol_data_dirs)
-          naMolsDict = dirichlet.getNaMolsDict( non_iid_clients, args.alphaKey, args_trainer_test )
+          naMolsDict = dirichlet.getNaMolsDict( non_iid_clients, args.alphaKey, args_trainer_test, args.existingdatasetid )
           dirichlet.getStackedSubplots(naMolsDict, k)
           dirichlet.getStackedSubplotsExcl78(naMolsDict, k)
         # dirichlet.getStackedSubplots(naMolsDict, formatted_date)
