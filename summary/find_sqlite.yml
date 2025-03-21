@@ -1,0 +1,29 @@
+---
+- name: Find *.sqlite files
+  vars:
+    sqlite_paths:
+      # 1080
+      server1080:
+        - "/home/secnet/git/graphganfeddrugbank/molecularGAN/GraphGANFed"
+        - "/home/secnet/git/graphganfeddrugbankTestGenTrMore/molecularGAN/GraphGANFed"
+      # 1660
+      server1660:
+        - "/home/secnet/git/graphganfeddrugbanksecnet1080copy/molecularGAN/GraphGANFed"
+        - "/home/secnet/git/graphganfeddrugbanksecnet1660copy/molecularGAN/GraphGANFed"
+      localhost:
+        - "/home/seclab/unm2h/git/nn/graphganfeddrugbankFL/molecularGAN/GraphGANFed"
+        - "/home/seclab/unm2h/git/nn/graphganfeddrugbanksecnet1080copy/molecularGAN/GraphGANFed"
+  hosts: all
+  tasks:
+  - name: Find *.sqlite files
+    find:
+      paths: "{{ sqlite_paths[inventory_hostname] }}"
+      patterns: "*.sqlite"
+      # ignore: true
+      # ignore_patterns:
+      #   - "progressDict.*.sqlite"
+    register: sqlite_files
+
+  - name: Display found files
+    debug:
+      var: sqlite_files
