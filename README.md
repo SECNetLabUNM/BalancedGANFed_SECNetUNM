@@ -79,3 +79,23 @@ pathList ['data_smiles/noniid/split-7092-6131-8750/3/0.pkl.dataset', 'data_smile
 ```
 * in the section above, commands begin with a % sign and those lines without % in front are console outputs
 
+# moving existing training setup to another computer and train there
+```
+2025-03-20 15:57:36 Created 9128 features and adjacency matrices  out of 9128 molecules!
+41664756it [00:05, 8311705.77it/s]
+pathList ['data_smiles/noniid/split-6477-6380-9116/3/0.pkl.dataset', 'data_smiles/noniid/split-6477-6380-9116/3/1.pkl.dataset', 'data_smiles/noniid/split-6477-6380-9116/3/2.pkl.dataset']
+[20/Mar/2025 16:28:48] "GET /fedgan5/img/StackedSubplots2xCol.2025-03-20_14-58-15.pdf HTTP/1.1" 200 -
+ 1751  python3 dirichlet_gen_dataset.py --formatted_date 2025-03-20_14-58-15
+ 1761  python3 dirichlet_gen_dataset.py --formatted_date 2025-03-20_14-58-15 --existingdatasetid 9905-2465-9603
+# according to these shell command history and console output
+# 9905-2465-9603 is the beta = 0.5 dataset
+# 6477-6380-9116 is the beta = 5 dataset generated subsequently
+# and the following is an example of beginning training at another computer:
+#
+$ mkdir -p data_smiles/noniid/
+$ scp -rp secnet@192.168.1.21:/home/secnet/git/BalancedGANFed_SECNetUNM/data_smiles/noniid/split-6477-6380-9116/ data_smiles/noniid/
+$ mkdir -p fedgan5/models/init/
+$ scp -rp secnet@192.168.1.21:/home/secnet/git/BalancedGANFed_SECNetUNM/fedgan5/models/init/2025-03-19_05-21-05 fedgan5/models/init/
+$ python3 trainer_test.py --cmd train   --epochs_global 500   --isWAvg True --man_resume_filepath fedgan5/models/init/2025-03-19_05-21-05/    --isNonIid True   --nonIidDatasets data_smiles/noniid/split-6477-6380-9116/3/0.pkl.dataset  data_smiles/noniid/split-6477-6380-9116/3/1.pkl.dataset   data_smiles/noniid/split-6477-6380-9116/3/2.pkl.dataset    2>/dev/null
+
+```
