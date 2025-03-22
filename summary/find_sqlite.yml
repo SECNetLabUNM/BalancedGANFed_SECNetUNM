@@ -2,14 +2,28 @@
 - name: Find *.sqlite files
   vars:
     sqlite_paths:
-      # 1080
+      server1070:
+        - "/home/seclab/unm2h/git/nn/graphganfeddrugbankFinetuneOndrugbank2/molecularGAN/GraphGANFed/BalancedGANFed_SECNetUNM"
+      # 1080 (as seen from 1660)
       server1080:
         - "/home/secnet/git/BalancedGANFed_SECNetUNM"
-      # 1660
+      m4mini:
+        - "/Users/watney/git/BalancedGANFed_SECNetUNM"
+      # 1660 itself (local paths)
       localhost:
         - "/home/secnet/git/BalancedGANFed_SECNetUNM"
-      localhost:
-        - "/home/seclab/unm2h/git/nn/graphganfeddrugbankFinetuneOndrugbank2/molecularGAN/GraphGANFed/BalancedGANFed_SECNetUNM"
+      # Add other servers as needed
+- name: Find *.sqlite files
+  vars:
+    sqlite_paths:
+      # 1080
+      # server1080:
+      #   - "/home/secnet/git/BalancedGANFed_SECNetUNM"
+      # # 1660
+      # localhost:
+      #   - "/home/secnet/git/BalancedGANFed_SECNetUNM"
+      # localhost:
+      #   - "/home/seclab/unm2h/git/nn/graphganfeddrugbankFinetuneOndrugbank2/molecularGAN/GraphGANFed/BalancedGANFed_SECNetUNM"
   hosts: all
   tasks:
   - name: Find *.sqlite files
