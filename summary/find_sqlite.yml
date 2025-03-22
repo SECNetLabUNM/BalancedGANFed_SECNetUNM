@@ -4,15 +4,12 @@
     sqlite_paths:
       # 1080
       server1080:
-        - "/home/secnet/git/graphganfeddrugbank/molecularGAN/GraphGANFed"
-        - "/home/secnet/git/graphganfeddrugbankTestGenTrMore/molecularGAN/GraphGANFed"
+        - "/home/secnet/git/BalancedGANFed_SECNetUNM"
       # 1660
-      server1660:
-        - "/home/secnet/git/graphganfeddrugbanksecnet1080copy/molecularGAN/GraphGANFed"
-        - "/home/secnet/git/graphganfeddrugbanksecnet1660copy/molecularGAN/GraphGANFed"
       localhost:
-        - "/home/seclab/unm2h/git/nn/graphganfeddrugbankFL/molecularGAN/GraphGANFed"
-        - "/home/seclab/unm2h/git/nn/graphganfeddrugbanksecnet1080copy/molecularGAN/GraphGANFed"
+        - "/home/secnet/git/BalancedGANFed_SECNetUNM"
+      localhost:
+        - "/home/seclab/unm2h/git/nn/graphganfeddrugbankFinetuneOndrugbank2/molecularGAN/GraphGANFed/BalancedGANFed_SECNetUNM"
   hosts: all
   tasks:
   - name: Find *.sqlite files
