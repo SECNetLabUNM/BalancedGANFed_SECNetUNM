@@ -44,3 +44,11 @@
     loop: "{{ sqlite_paths[inventory_hostname] }}"
     when: sqlite_paths[inventory_hostname] is defined
     tags: git_pull
+
+  - name: Update git remote URL
+    shell: git remote set-url origin https://github.com/SECNetLabUNM/BalancedGANFed_SECNetUNM.git
+    args:
+      chdir: "{{ item }}"
+    loop: "{{ sqlite_paths[inventory_hostname] }}"
+    when: sqlite_paths[inventory_hostname] is defined
+    tags: fix_git_remote
