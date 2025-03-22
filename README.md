@@ -99,3 +99,32 @@ $ scp -rp secnet@192.168.1.21:/home/secnet/git/BalancedGANFed_SECNetUNM/fedgan5/
 $ python3 trainer_test.py --cmd train   --epochs_global 500   --isWAvg True --man_resume_filepath fedgan5/models/init/2025-03-19_05-21-05/    --isNonIid True   --nonIidDatasets data_smiles/noniid/split-6477-6380-9116/3/0.pkl.dataset  data_smiles/noniid/split-6477-6380-9116/3/1.pkl.dataset   data_smiles/noniid/split-6477-6380-9116/3/2.pkl.dataset    2>/dev/null
 
 ```
+
+# monitor training results using ansible
+## setup
+```
+sudo apt install ansible
+
+ssh-keygen -t rsa
+# copy public keys to remote computers
+ssh-copy-id watney@10.88.215.?
+ssh-copy-id seclab@192.168.1.?
+ssh-copy-id secnet@192.168.1.?
+```
+
+## ansible commands
+```
+# check the sqlite files containing training logs at each compute
+ansible-playbook find_sqlite.yml -i hosts-current.ini  --tags progress_dict | grep progr
+
+# do git pull on all computers
+ansible-playbook find_sqlite.yml -i hosts-current.ini  --tags git_pull
+
+# git pull on specific computer
+ansible-playbook find_sqlite.yml -i hosts-current.ini  --tags git_pull  --limit server1080
+
+# to fix errors, not needed under normal circumstances
+ansible-playbook find_sqlite.yml -i hosts-current.ini  --tags fix_git_remote
+
+```
+
