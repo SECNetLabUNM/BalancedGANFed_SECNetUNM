@@ -35,3 +35,12 @@
     debug:
       var: progress_dict_files
     tags: progress_dict
+
+  - name: Perform git pull on repository directories
+    git:
+      repo: "{{ item }}"
+      dest: "{{ item }}"
+      update: yes
+    loop: "{{ sqlite_paths[inventory_hostname] }}"
+    when: sqlite_paths[inventory_hostname] is defined
+    tags: git_pull
