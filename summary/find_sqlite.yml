@@ -13,17 +13,6 @@
       localhost:
         - "/home/secnet/git/BalancedGANFed_SECNetUNM"
       # Add other servers as needed
-- name: Find *.sqlite files
-  vars:
-    sqlite_paths:
-      # 1080
-      # server1080:
-      #   - "/home/secnet/git/BalancedGANFed_SECNetUNM"
-      # # 1660
-      # localhost:
-      #   - "/home/secnet/git/BalancedGANFed_SECNetUNM"
-      # localhost:
-      #   - "/home/seclab/unm2h/git/nn/graphganfeddrugbankFinetuneOndrugbank2/molecularGAN/GraphGANFed/BalancedGANFed_SECNetUNM"
   hosts: all
   tasks:
   - name: Find *.sqlite files
@@ -35,6 +24,14 @@
       #   - "progressDict.*.sqlite"
     register: sqlite_files
 
-  - name: Display found files
+  - name: Find progressDict.*.sqlite files specifically
+    find:
+      paths: "{{ sqlite_paths[inventory_hostname] }}"
+      patterns: "progressDict.*.sqlite"
+    register: progress_dict_files
+    tags: progress_dict
+
+  - name: Display found progress_dict_files
     debug:
-      var: sqlite_files
+      var: progress_dict_files
+    tags: progress_dict
