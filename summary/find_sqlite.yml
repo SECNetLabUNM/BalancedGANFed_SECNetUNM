@@ -38,7 +38,7 @@
 
   - name: Perform git pull on repository directories
     git:
-      repo: "{{ item }}"
+      repo: "https://github.com/SECNetLabUNM/BalancedGANFed_SECNetUNM.git"
       dest: "{{ item }}"
       update: yes
     loop: "{{ sqlite_paths[inventory_hostname] }}"
