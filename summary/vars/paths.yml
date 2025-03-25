@@ -7,3 +7,4 @@ sqlite_paths:
     - "/Users/watney/git/BalancedGANFed_SECNetUNM"
   localhost:
     - "/home/secnet/git/BalancedGANFed_SECNetUNM"
+repo_url: "https://github.com/SECNetLabUNM/BalancedGANFed_SECNetUNM.git"

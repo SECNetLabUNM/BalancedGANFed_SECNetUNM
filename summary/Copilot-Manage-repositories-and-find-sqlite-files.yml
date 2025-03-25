@@ -24,7 +24,7 @@
 
   - name: Perform git pull on repository directories
     git:
-      repo: "https://github.com/SECNetLabUNM/BalancedGANFed_SECNetUNM.git"
+      repo: "{{ repo_url }}"
       dest: "{{ item }}"
       update: yes
     loop: "{{ sqlite_paths[inventory_hostname] }}"
@@ -32,7 +32,7 @@
     tags: git_pull
 
   - name: Update git remote URL
-    shell: git remote set-url origin https://github.com/SECNetLabUNM/BalancedGANFed_SECNetUNM.git
+    shell: git remote set-url origin "{{ repo_url }}"
     args:
       chdir: "{{ item }}"
     loop: "{{ sqlite_paths[inventory_hostname] }}"
