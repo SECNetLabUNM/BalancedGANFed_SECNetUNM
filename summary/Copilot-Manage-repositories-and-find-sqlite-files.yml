@@ -1,0 +1,68 @@
+---
+- name: Manage repositories and find *.sqlite files
+  hosts: all
+  vars_files:
+    - vars/paths.yml
+  tasks:
+  - name: Find *.sqlite files
+    find:
+      paths: "{{ sqlite_paths[inventory_hostname] }}"
+      patterns: "*.sqlite"
+    register: sqlite_files
+
+  - name: Find progressDict.*.sqlite files specifically
+    find:
+      paths: "{{ sqlite_paths[inventory_hostname] }}"
+      patterns: "progressDict.*.sqlite"
+    register: progress_dict_files
+    tags: progress_dict
+
+  - name: Display found progress_dict_files
+    debug:
+      var: progress_dict_files
+    tags: progress_dict
+
+  - name: Perform git pull on repository directories
+    git:
+      repo: "https://github.com/SECNetLabUNM/BalancedGANFed_SECNetUNM.git"
+      dest: "{{ item }}"
+      update: yes
+    loop: "{{ sqlite_paths[inventory_hostname] }}"
+    when: sqlite_paths[inventory_hostname] is defined
+    tags: git_pull
+
+  - name: Update git remote URL
+    shell: git remote set-url origin https://github.com/SECNetLabUNM/BalancedGANFed_SECNetUNM.git
+    args:
+      chdir: "{{ item }}"
+    loop: "{{ sqlite_paths[inventory_hostname] }}"
+    when: sqlite_paths[inventory_hostname] is defined
+    tags: fix_git_remote
+
+  - name: Check git status
+    command: git status
+    args:
+      chdir: "{{ item }}"
+    loop: "{{ sqlite_paths[inventory_hostname] }}"
+    when: sqlite_paths[inventory_hostname] is defined
+    register: git_status
+    tags: git_status
+
+  - name: Display git status
+    debug:
+      var: git_status
+    tags: git_status
+
+  - name: Get current HEAD of each repository
+    command: git rev-parse HEAD
+    args:
+      chdir: "{{ item }}"
+    loop: "{{ sqlite_paths[inventory_hostname] }}"
+    when: sqlite_paths[inventory_hostname] is defined
+    register: git_head
+    tags: git_head
+
+  - name: Display current HEAD of each repository
+    debug:
+      var: git_head
+    tags: git_head
