@@ -1,0 +1,9 @@
+sqlite_paths:
+  server1070:
+    - "/home/seclab/unm2h/git/nn/graphganfeddrugbankFinetuneOndrugbank2/molecularGAN/GraphGANFed/BalancedGANFed_SECNetUNM"
+  server1080:
+    - "/home/secnet/git/BalancedGANFed_SECNetUNM"
+  m4mini:
+    - "/Users/watney/git/BalancedGANFed_SECNetUNM"
+  localhost:
+    - "/home/secnet/git/BalancedGANFed_SECNetUNM"
