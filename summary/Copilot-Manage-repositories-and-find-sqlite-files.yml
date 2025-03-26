@@ -66,3 +66,17 @@
     debug:
       var: git_head
     tags: git_head
+
+  - name: Get commit date and time of HEAD
+    command: git show -s --format=%ci HEAD
+    args:
+      chdir: "{{ item }}"
+    loop: "{{ sqlite_paths[inventory_hostname] }}"
+    when: sqlite_paths[inventory_hostname] is defined
+    register: git_commit_date
+    tags: git_commit_date
+
+  - name: Display commit date and time of HEAD
+    debug:
+      var: git_commit_date
+    tags: git_commit_date
